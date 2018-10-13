@@ -1,15 +1,25 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const contents = require('./api/routes/contents');
-
+const genres = require('./api/routes/genres');
+const categories = require('./api/routes/categories');
+const directors = require('./api/routes/directors');
+const writers = require('./api/routes/writers');
+const languages = require('./api/routes/languages');
 
 const app = express();
-
-app.get('/', (req, res) => {
-    res.send('Welcome to my first app.');
-});
+require('./api/init/dbconnect')();
 
 app.use(express.json());
-app.use('/api/content', contents);
+app.use('/api/contents', contents);
+app.use('/api/genres', genres);
+app.use('/api/categories', categories);
+app.use('/api/writers', writers);
+app.use('/api/directors', directors);
+app.use('/api/languages', languages);
 
-app.listen(process.env.PORT || 3000, () => console.log('Connectiong to port no..'));
+app.get('/', (req, res) => {
+    res.send('Welcome to Movie Rating app.');
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Connectiong to port no: ${port}`));
