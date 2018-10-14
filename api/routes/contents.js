@@ -11,18 +11,33 @@ const asyncErrorHandler = require('../middleware/asyncErrorHandler');
 
 const router = express.Router();
 
+/**
+ * @name   GET api/contents/
+ * @desc   Return all contents order by published asc
+ * @access Public
+ */
 router.get('/', asyncErrorHandler(async (req, res) => {
     const contents = await Content.find().sort('published');
-    if (contents.length === 0) res.status(404).send('no content found!');
+    if (contents.length === 0) return res.status(404).send('no content found!');
     res.send(contents);
 }));
 
+/**
+ * @name   GET api/contents/
+ * @desc   Return a single contents based on provided id
+ * @access Public
+ */
 router.get('/:id', validateObjectId, asyncErrorHandler(async (req, res) => {
     const content = await Content.findById(req.params.id);
-    if (!content) res.status(404).send('no content is found by the given id!');
+    if (!content) return res.status(404).send('no content is found by the given id!');
     res.send(content);
 }));
 
+/**
+ * @name   POST api/contents/
+ * @desc   Save a contents provided by request body
+ * @access Public
+ */
 router.post('/', asyncErrorHandler(async (req, res) => {
     const category = await Category.findById(req.body.categoryId);
     if (!category) return res.status(400).send('Invalid category.');
@@ -74,13 +89,24 @@ router.post('/', asyncErrorHandler(async (req, res) => {
     res.send(result);
 }));
 
+
+/**
+ * @name   PUT api/contents/:id
+ * @desc   Update a contents data provided by request
+ * @access Public
+ */
 router.put('/:id', validateObjectId, (req, res) => {
     res.send('under development!');
 });
 
+/**
+ * @name   DELETE api/contents/:id
+ * @desc   Delete a contents  based on provided id
+ * @access Public
+ */
 router.delete('/:id', validateObjectId, asyncErrorHandler(async (req, res) => {
     const content = await Content.findByIdAndRemove(req.params.id);
-    if (!content) res.status(404).send('no content found by the given id!');
+    if (!content) return res.status(404).send('no content found by the given id!');
     res.send(content);
 }));
 
