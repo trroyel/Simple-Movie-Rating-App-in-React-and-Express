@@ -77,7 +77,6 @@ router.put('/:id', validateObjectId, (req,res)=>{
     res.send('under development!');
 });
 
-
 router.delete('/:id', validateObjectId, async (req, res) => {
     const content = await Content.findByIdAndRemove(req.params.id);
     if (!content) res.status(404).send('no content found by the given id!');

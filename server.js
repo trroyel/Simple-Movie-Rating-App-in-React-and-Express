@@ -5,6 +5,7 @@ const categories = require('./api/routes/categories');
 const directors = require('./api/routes/directors');
 const writers = require('./api/routes/writers');
 const languages = require('./api/routes/languages');
+const search = require('./api/routes/search');
 
 const app = express();
 require('./api/init/dbconnect')();
@@ -16,6 +17,7 @@ app.use('/api/categories', categories);
 app.use('/api/writers', writers);
 app.use('/api/directors', directors);
 app.use('/api/languages', languages);
+app.use('/api/search', search);
 
 app.get('/', (req, res) => {
     res.send('Welcome to Movie Rating app.');
