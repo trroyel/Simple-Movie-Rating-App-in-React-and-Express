@@ -8,29 +8,29 @@ const { languageSchema } = require('./language');
 const contentSchema = new mongoose.Schema({
     category: {
         type: categorySchema,
-        required: true,
+        required: [true, "category is required!"],
     },
 
     genre: {
         type: genreSchema,
-        required: true
+        required: [true, "genre is required!"],
     },
 
     title: {
         type: String,
-        required: true,
+        required: [true, "title is required!"],
         minlength: 2,
         maxlength: 300
     },
 
     director: {
         type: directorSchema,
-        required: true,
+        required: [true, "director is required!"],
     },
 
     writer: {
         type: writerSchema,
-        required: true,
+        required: [true, "writer is required!"],
     },
 
     published: {
@@ -40,17 +40,17 @@ const contentSchema = new mongoose.Schema({
 
     actors: {
         type: [String],
-        required: true
+        required: [true, "actors is required!"]
     },
 
     country: {
         type: String,
-        required:true
+        required: [true, "country is required!"]
     },
 
     language: {
         type: languageSchema,
-        required: true
+        required: [true, "language is required!"]
     },
 
     description: {
@@ -59,17 +59,17 @@ const contentSchema = new mongoose.Schema({
 
     length: {
         type: Number,
-        required: true
+        required: [true, "length is required!"]
     },
 
     rating: {
         type: Number,
-        required: true
+        required: [true, "rating is required!"]
     },
 
     image: {
         type: String,
-        required: true
+        required: [true, "image is required!"]
     }
 });
 

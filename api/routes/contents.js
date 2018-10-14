@@ -7,22 +7,23 @@ const { Director } = require('../models/director');
 const { Writer } = require('../models/writer');
 const { Language } = require('../models/language');
 const validateObjectId = require('../middleware/validateObjectId');
+const asyncErrorHandler = require('../middleware/asyncErrorHandler');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', asyncErrorHandler(async (req, res) => {
     const contents = await Content.find().sort('published');
     if (contents.length === 0) res.status(404).send('no content found!');
     res.send(contents);
-});
+}));
 
-router.get('/:id', validateObjectId, async (req, res) => {
+router.get('/:id', validateObjectId, asyncErrorHandler(async (req, res) => {
     const content = await Content.findById(req.params.id);
     if (!content) res.status(404).send('no content is found by the given id!');
     res.send(content);
-});
+}));
 
-router.post('/', async (req, res) => {
+router.post('/', asyncErrorHandler(async (req, res) => {
     const category = await Category.findById(req.body.categoryId);
     if (!category) return res.status(400).send('Invalid category.');
 
@@ -71,16 +72,16 @@ router.post('/', async (req, res) => {
 
     const result = await content.save();
     res.send(result);
-});
+}));
 
-router.put('/:id', validateObjectId, (req,res)=>{
+router.put('/:id', validateObjectId, (req, res) => {
     res.send('under development!');
 });
 
-router.delete('/:id', validateObjectId, async (req, res) => {
+router.delete('/:id', validateObjectId, asyncErrorHandler(async (req, res) => {
     const content = await Content.findByIdAndRemove(req.params.id);
     if (!content) res.status(404).send('no content found by the given id!');
     res.send(content);
-});
+}));
 
 module.exports = router;

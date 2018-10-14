@@ -1,29 +1,30 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Content = require('../models/content');
+const asyncErrorHandler = require('../middleware/asyncErrorHandler');
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', asyncErrorHandler(async (req, res) => {
     const result = await Content.find().select('title actors image').sort('-published').limit(12);
-    if (!result) res.status(404).send(`no content is found!`);
+    if (!result) return res.status(404).send(`no content is found!`);
     res.send(result);
-});
+}));
 
-router.get('/:key', async (req, res) => {
+router.get('/:key', asyncErrorHandler(async (req, res) => {
     const val = req.params.key;
     const result = await Content.find().select(val).sort('name');
-    if (result.length === 0) res.status(404).send(`no ${val} is found!`);
+    if (result.length === 0) return res.status(404).send(`no ${val} is found!`);
     res.send(result);
-});
+}));
 
-router.get('/:topic/:name', async (req, res) => {
+router.get('/:topic/:name', asyncErrorHandler(async (req, res) => {
     const { topic, name } = req.params;
     const searchBy = topic + '.name';
 
     const result = await Content.find({ [searchBy]: name }).sort('published');
-    if (result.length === 0) res.status(404).send(`no ${name} content is found!`);
+    if (result.length === 0) return res.status(404).send(`no ${name} content is found!`);
     res.send(result);
-});
+}));
 
 
 

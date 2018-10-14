@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const writerSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
+        required: [true, "writer name is required!"],
         minlength: 4,
         maxlength: 50
     },
