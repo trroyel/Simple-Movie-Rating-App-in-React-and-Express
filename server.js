@@ -11,6 +11,7 @@ app.use('/api/writers', require('./api/routes/writers'));
 app.use('/api/directors', require('./api/routes/directors'));
 app.use('/api/languages', require('./api/routes/languages'));
 app.use('/api/search', require('./api/routes/search'));
+app.use('/*', require('./api/routes/404'));
 
 app.use(require('./api/middleware/errorHandler'));
 
