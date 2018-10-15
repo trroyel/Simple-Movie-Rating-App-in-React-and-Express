@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', asyncErrorHandler(async (req, res) => {
     const writers = await Writer.find().sort('name');
-    if (writers.length === 0) res.status(404).send('no writer is found!');
+    if (writers.length === 0) return res.status(404).send('no writer is found!');
     res.send(writers);
 }));
 
@@ -30,13 +30,13 @@ router.put('/:id', validateObjectId, asyncErrorHandler(async (req, res) => {
         req.body,
         { new: true }
     );
-    if (!writer) res.status(404).send('no writer is found by given id!');
+    if (!writer) return res.status(404).send('no writer is found by given id!');
     res.send(writer);
 }));
 
 router.delete('/:id', validateObjectId, asyncErrorHandler(async (req, res) => {
     const writer = await Writer.findByIdAndRemove(req.params.id);
-    if (!writer) res.status(404).send('No writer found by the given id !!');
+    if (!writer) return res.status(404).send('No writer found by the given id !!');
     res.send(writer);
 }));
 

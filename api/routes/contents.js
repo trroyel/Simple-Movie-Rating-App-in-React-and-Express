@@ -86,6 +86,7 @@ router.post('/', asyncErrorHandler(async (req, res) => {
     });
 
     const result = await content.save();
+    if (!result) return res.status(500).send('new content is failed to save!');
     res.send(result);
 }));
 

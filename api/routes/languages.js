@@ -12,7 +12,7 @@ const router = express.Router();
  */
 router.get('/', asyncErrorHandler(async (req, res) => {
     const languages = await Language.find();
-    if (languages.length === 0) res.status(404).send('no language found!');
+    if (languages.length === 0) return res.status(404).send('no language found!');
     res.send(languages);
 }));
 
