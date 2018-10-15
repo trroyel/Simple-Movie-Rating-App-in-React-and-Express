@@ -20,6 +20,7 @@ router.get('/:id', validateObjectId, asyncErrorHandler(async (req, res) => {
 router.post('/', asyncErrorHandler(async (req, res) => {
     const writer = new Writer({ name: req.body.name, address: req.body.address });
     const result = await writer.save();
+    if (!result) return res.status(500).send('writer data is failed to save!');
     res.send(result);
 }));
 

@@ -1,9 +1,12 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 require('./api/init/dbconnect')();
 
 app.use(express.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
 app.use('/api/contents', require('./api/routes/contents'));
 app.use('/api/genres', require('./api/routes/genres'));
 app.use('/api/categories', require('./api/routes/categories'));
