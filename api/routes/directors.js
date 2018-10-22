@@ -11,7 +11,7 @@ const router = express.Router();
  * @access Public
  */
 router.get('/', asyncErrorHandler(async (req, res) => {
-    const directors = await Director.find().sort('name');
+    const directors = await Director.find().select('name').sort('name');
     if (directors.length === 0) return res.status(404).send('no director is found!');
     res.send(directors);
 }));

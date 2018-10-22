@@ -6,7 +6,7 @@ const asyncErrorHandler = require('../middleware/asyncErrorHandler');
 const router = express.Router();
 
 router.get('/', asyncErrorHandler(async (req, res) => {
-    const writers = await Writer.find().sort('name');
+    const writers = await Writer.find().select('name').sort('name');
     if (writers.length === 0) return res.status(404).send('no writer is found!');
     res.send(writers);
 }));

@@ -11,7 +11,7 @@ const router = express.Router();
  * @access Public
  */
 router.get('/', asyncErrorHandler(async (req, res) => {
-    const categories = await Category.find().sort('name');
+    const categories = await Category.find().select('name').sort('name');
     if (categories.length === 0) return res.status(404).send('no category is found!');
     res.send(categories);
 }));

@@ -11,7 +11,7 @@ const router = express.Router();
  * @access Public
  */
 router.get('/', asyncErrorHandler(async (req, res) => {
-    const genres = await Genre.find().sort('name');
+    const genres = await Genre.find().select('name').sort('name');
     if (genres.length === 0) return res.status(404).send('no genres is found!');
     res.send(genres);
 }));

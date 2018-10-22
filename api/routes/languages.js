@@ -11,7 +11,7 @@ const router = express.Router();
  * @access Public
  */
 router.get('/', asyncErrorHandler(async (req, res) => {
-    const languages = await Language.find();
+    const languages = await Language.find().select('name');
     if (languages.length === 0) return res.status(404).send('no language found!');
     res.send(languages);
 }));
