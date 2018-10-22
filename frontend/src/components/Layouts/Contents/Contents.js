@@ -6,15 +6,17 @@ const { Meta } = Card;
 
 const content = (props) => (
     <Layout style={{ padding: '0 24px 24px' }}>
+    
         <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>List</Breadcrumb.Item>
             <Breadcrumb.Item>App</Breadcrumb.Item>
         </Breadcrumb>
+
         <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
             <List
                 grid={{ gutter: 16, column: 4 }}
-                dataSource={props.movieContent}
+                dataSource={props.contentData}
                 renderItem={item => (
                     <List.Item>
 

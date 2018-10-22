@@ -8,8 +8,14 @@ const layouts = (props) => (
     <Layout>
         <Headers />
         <Layout>
-            <SideBar />
-            <Contents movieContent={props.movieContent}/>
+            <SideBar
+                category={props.category}
+                writer={props.writer}
+                director={props.director}
+                genre={props.genre}
+            />
+
+            <Contents contentData={props.contentData} />
         </Layout>
     </Layout>);
 

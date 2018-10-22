@@ -1,10 +1,14 @@
 import React from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Checkbox } from 'antd';
+import MenuItems from './MenuItems';
 
-const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 const sideBars = (props) => {
+    
+    //store props data to different constant
+    const { genre, category, writer, director } = props;
+
     return (
         <Sider width={200} style={{ background: '#fff' }}>
             <Menu
@@ -13,26 +17,24 @@ const sideBars = (props) => {
                 defaultOpenKeys={['sub1']}
                 style={{ height: '100%', borderRight: 0 }}>
 
-                <SubMenu key="sub1" title={<span><Icon type="video-camera" />Contents</span>}>
-                    <Menu.Item key="1">Movie</Menu.Item>
-                    <Menu.Item key="2">Episode</Menu.Item>
-                    <Menu.Item key="3">Series</Menu.Item>
-                    <Menu.Item key="4">Game</Menu.Item>
-                </SubMenu>
-                <SubMenu key="sub2" title={<span><Icon type="laptop" />Director</span>}>
-                    <Menu.Item key="5">Humaun Ahmed</Menu.Item>
-                    <Menu.Item key="6">James Cameron</Menu.Item>
-                    <Menu.Item key="7">Srijit Mukharjee</Menu.Item>
-                    <Menu.Item key="8">Toukir Ahmed</Menu.Item>
-                </SubMenu>
-                <SubMenu key="sub3" title={<span><Icon type="notification" />Writer</span>}>
-                    <Menu.Item key="9">Humaun Ahmed</Menu.Item>
-                    <Menu.Item key="10">James Cameron</Menu.Item>
-                    <Menu.Item key="11">Sirshendu Mukharjee</Menu.Item>
-                    <Menu.Item key="12">Jafar Ikbal</Menu.Item>
-                </SubMenu>
+                <MenuItems ikey="content" itemData={category} itype="camera" >
+                    Contents
+                </MenuItems>
+
+                <MenuItems ikey="genre" itemData={genre} itype="project" >
+                    Genres
+                </MenuItems>
+
+                <MenuItems ikey="writer" itemData={writer} itype="diff" >
+                    Writers
+                </MenuItems>
+
+                <MenuItems ikey="director" itemData={director} itype="video-camera" >
+                    Directors
+                </MenuItems>
 
             </Menu>
+
         </Sider>
     );
 }
