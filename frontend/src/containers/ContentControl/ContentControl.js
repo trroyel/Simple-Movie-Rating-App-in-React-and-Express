@@ -3,7 +3,7 @@ import Headers from '../../components/Headers/Headers';
 import Contents from '../../components/Contents/Contents';
 import SideBar from '../../components/SideBar/SideBar';
 import axios from 'axios';
-import { Icon, Layout } from 'antd';
+import { Layout, Spin, Alert } from 'antd';
 
 import './ContentControl.css';
 
@@ -56,22 +56,38 @@ class ContentControll extends Component {
                 this.setState({ contents: content, isLoading: false, error: false });
             })
             .catch(err => {
-                console.log(err.message);
                 this.setState({ error: true, isLoading: false })
             })
-    }
+    };
+
+    singleContentSearchHandler = (id) => {
+        alert('singleContentSearchHandler clicked! '+id);
+        //this.setState({ isLoading: true });
+        axios.get(`/api/contents/${id}`)
+            .then(res => {
+                const content = res.data;
+                console.log(content);
+                
+                //this.setState({ contents: content, isLoading: false, error: false });
+            })
+            .catch(err => {
+                console.log(err);
+                
+               // this.setState({ error: true, isLoading: false })
+            })
+    };
 
     actorSearchHandler = (actorsArray) => {
+
         this.setState({ isLoading: true });
-        const arr = ["Leonardo DiCaprio","Tania Ahmed"]
-        alert('clicked with: '+ actorsArray);
-        axios.get(`api/search/data/content/actor?array=${arr}`)
+        const arrupdate = `["${actorsArray.join('","')}"]`;
+
+        axios.get(`api/search/data/content/actor?array=${arrupdate}`)
             .then(response => {
                 const content = response.data;
                 this.setState({ contents: content, isLoading: false, error: false });
             })
             .catch(err => {
-                console.log(err.message);
                 this.setState({ error: true, isLoading: false })
             })
     };
@@ -91,20 +107,28 @@ class ContentControll extends Component {
         const { categories, contents, directors, writers, genres, isLoading, error } = this.state;
         const actorsData = this.getActorsObjectToArray();
 
+        let content = null;
+
         if (isLoading) {
-            return (
-                <p className="center">
-                    <span><Icon type="loading" className="spin-icon" /></span>
-                </p>);
+            content = <Spin tip="Loading..." className="center" />
+        } else if (error) {
+            content = <Alert
+                message="404"
+                description="No content found!."
+                type="error" showIcon
+                className="center" />
+        } else {
+            content = <Contents
+                contentData={contents}
+                handleSingleContent={this.singleContentSearchHandler} />
         }
 
-        const content = (error)
-            ? <p className="center">404!</p>
-            : <Contents contentData={contents} />
+        // content = (error)
+        //     ? <p className="center">404!</p>
+        //     : <Contents contentData={contents} />
 
 
         const sidebar = <SideBar
-            contentData={contents}
             category={categories}
             writer={writers}
             director={directors}

@@ -19,9 +19,9 @@ const content = (props) => (
                 grid={{ gutter: 16, column: 4 }}
                 dataSource={props.contentData}
                 renderItem={item => (
-                    <List.Item>
+                    <List.Item >
 
-                        <Card
+                        <Card onClick={() => props.handleSingleContent(item._id)}
                             hoverable
                             style={{ width: 240 }}
                             cover={<img alt="example" src={item.image} />}
