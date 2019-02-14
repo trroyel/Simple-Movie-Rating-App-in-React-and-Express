@@ -17,14 +17,21 @@ class ContentControll extends Component {
         genres: [],
         actors: [],
         isLoading: false,
-        error: false
+        error: false,
+        filter: {
+            actors: [],
+            writer: null,
+            director: null,
+            genre: null,
+            category: null
+        }
     };
 
     componentDidMount() {
         this.setState({ isLoading: true });
         axios.all([
             axios.get('/api/categories/'),
-            axios.get('/api/search/'),
+            axios.get('/api/contents/'),
             axios.get('/api/writers/'),
             axios.get('/api/directors/'),
             axios.get('/api/genres/'),
@@ -48,7 +55,13 @@ class ContentControll extends Component {
     }
 
     contentSearchHandler = (serachTo, serachBy) => {
-        this.setState({ isLoading: true });
+
+        const updatedFilterData = {...this.state.filter };
+        updatedFilterData[serachTo.toLowerCase()] = serachBy;
+
+        this.setState({ isLoading: true, filter: updatedFilterData});
+        console.log(this.state.filter);
+        
 
         axios.get(`/api/search/${serachTo.toLowerCase()}/${serachBy}/`)
             .then(response => {
@@ -61,19 +74,19 @@ class ContentControll extends Component {
     };
 
     singleContentSearchHandler = (id) => {
-        alert('singleContentSearchHandler clicked! '+id);
+        alert('singleContentSearchHandler clicked! ' + id);
         //this.setState({ isLoading: true });
         axios.get(`/api/contents/${id}`)
             .then(res => {
                 const content = res.data;
                 console.log(content);
-                
+
                 //this.setState({ contents: content, isLoading: false, error: false });
             })
             .catch(err => {
                 console.log(err);
-                
-               // this.setState({ error: true, isLoading: false })
+
+                // this.setState({ error: true, isLoading: false })
             })
     };
 

@@ -8,7 +8,7 @@ const { languageSchema } = require('./language');
 const contentSchema = new mongoose.Schema({
     category: {
         type: categorySchema,
-        required: [true, "category is required!"],
+        required: [true, "category is required!"]
     },
 
     genre: {

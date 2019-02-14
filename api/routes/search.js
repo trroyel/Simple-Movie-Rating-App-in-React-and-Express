@@ -1,9 +1,33 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const Content = require('../models/content');
 const asyncErrorHandler = require('../middleware/asyncErrorHandler');
 
 const router = express.Router();
+
+// /**
+//  * @name   GET api/search/
+//  * @desc   Return latest 12 contents data with title, actors and image props
+//  *         based on query paramas send from frontend
+//  * @access Public
+//  */
+// router.get('/', asyncErrorHandler(async (req, res) => {
+//     const { category, director, writer, actor } = req.query;
+//     const data = {};
+
+//     if (category != undefined) { data['category.name'] = category }
+//     if (director != undefined) { data['director.name'] = director }
+//     if (writer != undefined) { data['writer.name'] = writer }
+//     if (actor != undefined) { data['actors'] = { "$in": JSON.parse(actor) } }
+
+//     const results = await Content
+//         .find({ ...data })
+//         .select('title actors image')
+//         .sort('-published')
+//         .limit(12);
+
+//     if (results.length === 0) return res.status(404).send(`no content is found!`);
+//     res.send(results);
+// }));
 
 /**
  * @name   GET api/search/
